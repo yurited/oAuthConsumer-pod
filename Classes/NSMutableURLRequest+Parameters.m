@@ -37,24 +37,41 @@ static NSString *Boundary = @"-----------------------------------0xCoCoaouTHeBou
     NSString *encodedParameters = nil;
     
 	if (![self isMultipart]) {
-		if ([[self HTTPMethod] isEqualToString:@"GET"] || [[self HTTPMethod] isEqualToString:@"DELETE"]) {
+        // Allow PUT and DELETE methods as well, assuming they have query params.
+		if ([[self HTTPMethod] isEqualToString:@"GET"] || [[self HTTPMethod] isEqualToString:@"DELETE"] || [[self HTTPMethod] isEqualToString:@"PUT"] || [[self URL] query]) {
 			encodedParameters = [[self URL] query];
 		} else {
 			encodedParameters = [[NSString alloc] initWithData:[self HTTPBody] encoding:NSASCIIStringEncoding];
 		}
 	}
+    else if ([[self URL] query]) {
+        encodedParameters = [[self URL] query];
+    }
     
+    // Do not mess with application/json in the body.
+    if ([[self valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/json"] && !encodedParameters) {
+        return nil;
+    }
+    
+    // Nothing to encode, return nothing.
     if (encodedParameters == nil || [encodedParameters isEqualToString:@""]) {
         return nil;
     }
-//    NSLog(@"raw parameters %@", encodedParameters);
+    
     NSArray *encodedParameterPairs = [encodedParameters componentsSeparatedByString:@"&"];
     NSMutableArray *requestParameters = [NSMutableArray arrayWithCapacity:[encodedParameterPairs count]];
     
     for (NSString *encodedPair in encodedParameterPairs) {
-        NSArray *encodedPairElements = [encodedPair componentsSeparatedByString:@"="];
-        OARequestParameter *parameter = [[OARequestParameter alloc] initWithName:[[encodedPairElements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-                                                                           value:[[encodedPairElements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        NSRange equalsRange = [encodedPair rangeOfString:@"="];
+        if (equalsRange.location == NSNotFound) {
+            continue;
+        }
+        // Everything to the left of the first equal is the key, everything
+        // after is the value.
+        NSString *key = [encodedPair substringToIndex:equalsRange.location];
+        NSString *value = [encodedPair substringFromIndex:equalsRange.location + equalsRange.length];
+        OARequestParameter *parameter = [[OARequestParameter alloc] initWithName:[key stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                                                           value:[value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         [requestParameters addObject:parameter];
     }
     

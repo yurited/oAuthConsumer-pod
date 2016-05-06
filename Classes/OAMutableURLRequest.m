@@ -132,7 +132,7 @@ signatureProvider:(id<OASignatureProviding>)aProvider
     //NSMakeCollectable(theUUID);
 	if (nonce) {
 	}
-    nonce = (__bridge NSString *)string;
+    nonce = CFBridgingRelease(string);
 }
 
 NSInteger normalize(id obj1, id obj2, void *context)
@@ -180,11 +180,9 @@ NSInteger normalize(id obj1, id obj2, void *context)
 		[parameterPairs addObject:[[OARequestParameter requestParameter:k value:[tokenParameters objectForKey:k]] URLEncodedNameValuePair]];
 	}
     
-	if (![[self valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"multipart/form-data"]) {
-		for (OARequestParameter *param in parameters) {
-			[parameterPairs addObject:[param URLEncodedNameValuePair]];
-		}
-	}
+    for (OARequestParameter *param in parameters) {
+        [parameterPairs addObject:[param URLEncodedNameValuePair]];
+    }
     
     // Oauth Spec, Section 3.4.1.3.2 "Parameters Normalization    
     NSArray *sortedPairs = [parameterPairs sortedArrayUsingFunction:normalize context:NULL];
