@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint OAuthConsumer.podspec' to ensure this is a
+# Be sure to run `pod lib lint YOAuthConsumer.podspec' to ensure this is a
 # valid spec and remove all comments before submitting the spec.
 #
 # Any lines starting with a # are optional, but encouraged
@@ -8,9 +8,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "OAuthConsumer"
-  s.version          = "1.0.7"
-  s.summary          = "OAuthConsumer is an iPhone-ready iOS 8.0 compatible, ARC-supported OAuth implementation."
+  s.name             = "YOAuthConsumer"
+  s.version          = "1.0.8"
+  s.summary          = "OAuthConsumer is an iPhone-ready iOS 8.0 compatible, ARC-supported OAuth implementation. Initially written by Larry Borsato. Includes additional changes to parameter encoding logic."
   s.homepage         = "https://github.com/lborsato/oAuthConsumer-pod"
   s.license          = 'MIT'
   s.author           = { "Larry Borsato" => "larry@larryborsato.com", "Shen Lu" => "lushen124@gmail.com" }
