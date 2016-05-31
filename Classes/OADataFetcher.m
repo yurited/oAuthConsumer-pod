@@ -79,6 +79,18 @@
 		handler(ticket, responseData, nil);
 }
 
+- (void)connection:(NSURLConnection *)connection willSendRequestForAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
+{
+    if (self.trustInvalidCertificates) {
+        if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
+            return;
+        }
+    }
+    
+    [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
+}
+
 
 - (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest
 					delegate:(id)aDelegate

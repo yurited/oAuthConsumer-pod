@@ -30,7 +30,7 @@
 typedef void (^OADataFetcherCompletedHandler) (OAServiceTicket *ticket, NSData *data, NSError *error);
 
 
-@interface OADataFetcher : NSObject {
+@interface OADataFetcher : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate> {
 @private
     OAMutableURLRequest *request;
     NSURLResponse *response;
@@ -41,6 +41,8 @@ typedef void (^OADataFetcherCompletedHandler) (OAServiceTicket *ticket, NSData *
     SEL didFailSelector;
 	OADataFetcherCompletedHandler	handler;
 }
+
+@property (nonatomic, assign) BOOL trustInvalidCertificates; // Only set this if you are sure the server is trustworthy (i.e. dev servers).
 
 - (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
 
