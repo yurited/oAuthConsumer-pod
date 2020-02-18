@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint YOAuthConsumer.podspec' to ensure this is a
+# Be sure to run `pod lib lint YNOAuthConsumer.podspec' to ensure this is a
 # valid spec and remove all comments before submitting the spec.
 #
 # Any lines starting with a # are optional, but encouraged
