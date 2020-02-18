@@ -237,11 +237,12 @@
 	
 		[reqToken storeInUserDefaultsWithServiceProviderName:oauthBase prefix:[@"request:" stringByAppendingString:realm]];
 		/* Save the token in case we exit and start again
-		 before the token is authorized (useful for iPhone) */
-		//NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@authorize?oauth_token=%@&oauth_callback=%@",
-		//								   oauthBase, token.key, callback]];
-		// [[UIApplication sharedApplication] openURL:url];
-
+		 before the token is authorized (useful for iPhone) */		
+#ifndef HR_APP_EXTENSION
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@authorize?oauth_token=%@&oauth_callback=%@",
+										   oauthBase, token.key, callback]];
+		[[UIApplication sharedApplication] openURL:url];
+#endif
 	}
 }
 
