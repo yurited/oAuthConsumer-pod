@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "YNOAuthConsumer"
-  s.version          = "1.0.10"
+  s.version          = "1.0.11"
   s.summary          = "YNOAuthConsumer is an iPhone-ready iOS 8.0 compatible OAuth implementation."
   s.homepage         = "https://github.com/yurited/oAuthConsumer-pod"
   s.license          = 'MIT'
@@ -20,7 +20,4 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Classes/*'
-  s.resource_bundles = {
-    'OAuthConsumer' => ['Pod/Assets/*.png']
-  }
 end
