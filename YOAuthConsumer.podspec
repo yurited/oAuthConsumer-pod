@@ -8,13 +8,13 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = "YOAuthConsumer"
-  s.version          = "1.0.9"
-  s.summary          = "OAuthConsumer is an iPhone-ready iOS 8.0 compatible, ARC-supported OAuth implementation."
-  s.homepage         = "https://github.com/lborsato/oAuthConsumer-pod"
+  s.name             = "YNOAuthConsumer"
+  s.version          = "1.0.10"
+  s.summary          = "YNOAuthConsumer is an iPhone-ready iOS 8.0 compatible OAuth implementation."
+  s.homepage         = "https://github.com/yurited/oAuthConsumer-pod/"
   s.license          = 'MIT'
-  s.author           = { "Larry Borsato" => "larry@larryborsato.com", "Shen Lu" => "lushen124@gmail.com" }
-  s.source           = { :git => "https://github.com/lushen124/oAuthConsumer-pod.git", :tag => s.version.to_s }
+  s.author           = { "Larry Borsato" => "larry@larryborsato.com", "Shen Lu" => "lushen124@gmail.com", "Li Yu" => "ly257@verizonmedia.com" }
+  s.source           = { :git => "https://github.com/yurited/oAuthConsumer-pod.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '7.0'
   s.requires_arc = true
